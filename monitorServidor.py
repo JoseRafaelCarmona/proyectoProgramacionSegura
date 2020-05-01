@@ -9,8 +9,8 @@ Created on Thu Apr 23 06:55:55 2020
 import psutil
 from subprocess import Popen, PIPE, STDOUT
 
-def salidaComando(comando):
-	event = Popen(comando, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+def salidaComando():
+	event = Popen('df -l | grep "/dev/sda*"', shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
 	output = event.communicate()
 	salida = output[0].decode('utf-8')
 	return salida
@@ -23,10 +23,10 @@ def calcular_memoria_ram():
 def calcular_swap():
     memoriaSwapTotal = psutil.swap_memory()[0]
     memoriaSwapOcupada = psutil.swap_memory()[1]
-    return str((memoriaSwapOcupada*100)/memoriaSwapTotal)
+    return str((memoriaSwapOcupada*100)/memoriaSwapTotal)[:4]
 
 def obtener_particiones_disco():
-    particiones = salidaComando('df -l | grep "/dev/sda*"')
+    particiones = salidaComando()
     particiones = particiones.split('\n')
     return particiones
 
