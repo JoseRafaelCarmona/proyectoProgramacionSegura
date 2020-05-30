@@ -5,7 +5,7 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'front_end.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'servicios_back_end.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

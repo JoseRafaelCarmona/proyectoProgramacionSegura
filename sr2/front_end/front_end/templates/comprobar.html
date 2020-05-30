@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block titulo %}Comprobacion{% endblock%}
+{% block nav %}{% endblock %}
+{% block contenido %}
+<div class="container" >
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-6">
+					<img src="/static/img/uv.png" class="img-fluid">
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="container">
+				<div  class="row">
+					<div class="col-sm-6"><img src="/static/img/login.png" class="img-fluid" id="icono-login"></div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6"><label>Ingresa el código enviado en su chat {{ usuario_logueado }}, solo será valido por 2 minutos</label>
+						<form class="form-horizontal" method="POST">
+							{% csrf_token %}
+							<input type="text" class="form-control" placeholder="codigo" name="codigo" required>
+							<br>
+							<button type="submit" class="btn btn-primary">Enviar</button>
+						</form>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

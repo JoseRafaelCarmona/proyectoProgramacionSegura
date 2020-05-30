@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block titulo %}Registro{% endblock%}
+{% block nav %}
+{% endblock %}
+{% block contenido %}
+<div class="container" >
+	<div class="row">
+		<div class="col-sm-4">
+		{% if errores == 'bien'%}
+			<div class="alert alert-success">
+    			<strong>¡Se ha guarado con exito!</strong>
+  			</div>
+		{% else %}
+			{% if errores %}
+  			<div class="alert alert-danger" role="alert">
+				<p>ERROR</p>{{ errores }}
+			</div> 
+			{% endif %}
+		{% endif %}
+		</div>
+		<div class="col-sm-4">
+			<div class="container">
+				<div class="row">
+					<form class="form-horizontal" method="POST">
+						{% csrf_token %}
+						<div class="form-group">
+							<br>
+		    	       		<label>Ingresa los datos del administrador</label>
+		        	   		<input type="text" class="form-control" placeholder="Nombre administrador" name="nombreAdmin" required>
+		           			<div class="invalid-feedback">Nombre administrador</div>
+		        		</div>
+	          			<div class="form-group">
+	            			<input type="text" class="form-control" placeholder="nombre usuario" name="nombreUsuario" required>
+	            			<div class="invalid-feedback">Elige nombre Usuario</div>
+	          			</div>
+	          			<div class="form-group">
+	            			<input type="password" class="form-control" placeholder="PASSWORD" name="pass" required>
+	            			<div class="invalid-feedback">ip servidor</div>
+	          			</div>
+	          			<div class="form-group">
+	            			<input type="text" class="form-control" placeholder="IP SERVIDOR" name="ip_servidor" required>
+	            			<div class="invalid-feedback">ip servidor</div>
+	          			</div>
+	          			<div class="form-group">
+	            			<input type="text" class="form-control" placeholder="Token telegram" name="token_telegram" required>
+	            			<div class="invalid-feedback">Token telegram</div>
+	          			</div>
+	          			<div class="form-group">
+	            			<input type="text" class="form-control" placeholder="ID chat" name="id_chat" required>
+	            			<div class="invalid-feedback">ID del chat</div>
+	          			</div>
+	          			<button type="submit" class="btn btn-primary">Registrar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+<!-- servidores:
+adminsitradores
+nombreAdmin
+nombreUsuario
+password
+ip_servidor
+tokenTelegram
+telegram
+benito1000	-->

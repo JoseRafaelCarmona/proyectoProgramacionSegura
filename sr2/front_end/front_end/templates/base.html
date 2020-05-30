@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block titulo %}{% endblock%}</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<link href="/static/css/stilos.css" type="text/css">
+		<script src="http://pajhome.org.uk/crypt/md5/2.2/md5-min.js"></script>
+	</head>
+	<body background="/static/img/fondo.jpg">
+		{% if logueado %}
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<!-- <a class="navbar-brand" href="/inicio/">Inicio</a> -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="#"></a>
+					</li>
+					{% if user == 'adminGlobal' %}
+					<li class="nav-item">
+						<a class="nav-link" href="/registro/">Registro</a>
+					</li>
+					{% endif %}    
+				</ul>
+			</div>
+			<div class="pull-right">
+				<ul class="nav pull-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido<b class=	"caret"></b></a>
+						<ul class="dropdown-menu">
+							<li class="divider"></li>
+							<li><a href="/logout/"><em class="icon-off"></em> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>  
+		</nav>
+		<h1 class="text-center"><kbd>Bienvenido</kbd></h1>
+		{% endif %}
+		{% block contenido %}{% endblock %}
+	</body>
+</html>
