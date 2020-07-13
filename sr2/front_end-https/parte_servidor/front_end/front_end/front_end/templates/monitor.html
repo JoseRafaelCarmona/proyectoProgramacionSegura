@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Inicio{% endblock%}
+
+{% block nav %}
+  {% block nav_mod %}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+  				<span class="navbar-toggler-icon"></span>
+  			</button>
+  			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+  				<ul class="navbar-nav">
+  					<li class="nav-item">
+  						<a class="nav-link" href="/monitor/">Monitor</a>
+  					</li>
+  				</ul>
+  			</div>
+  			<div class="pull-right">
+  				<ul class="nav pull-right">
+  					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido<b class=	"caret"></b></a>
+  						<ul class="dropdown-menu">
+  							<li class="divider"></li>
+  							<li><a href="/logout/"><em class="icon-off"></em> Logout</a></li>
+  						</ul>
+  					</li>
+  				</ul>
+  			</div>
+  {% endblock %}
+{% endblock %}
+
+{% block contenido %}
+<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th>Hostname</th>
+          <th>Direccion_ip</th>
+          <th>Direccion_MAC</th>
+          <th>Activo/Inactivo</th>
+          <th>Conectarse</th>
+          <th>Datos_servidor</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for datos in listaServidores %}
+          <tr>
+            <td>{{ datos.hostname }} </td>
+            <td>{{ datos.ip_servidor }}</td>
+            <td>{{ datos.mac }}</<td>
+            {% if datos.estatus %}
+              <td>Activo</td>
+              <td><a href="http://{{ datos.ip_servidor }}:6767"><button type="button" class="btn btn-primary">Conectarse</button></a></td>
+              <form type="hidden" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ datos.ip_servidor }}" name="servidor_seleccionado"/>
+                <td><button type="submit" class="btn btn-success">Verificar_datos</button></td>
+              </form>
+            {% else %}
+              <td>Inactivo</td>
+              <td><button type="button" class="btn btn-danger">No disponible</button></a></td>
+              <td><button type="button" class="btn btn-danger" formmethod="post">offline</button></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+				</div>
+			</div>
+		</div>
+
+  {% block con_sec %}
+  <form>
+  	<input type="hidden" value="{{ llave_aes_usr}}" name="key_1"/>
+  	<input type="hidden" value="{{ iv_usr }}" name="key_2"/>
+  	<input type="hidden" value="{{ llave_aes_pwd }}" name="key_3"/>
+  	<input type="hidden" value="{{ iv_pwd }}" name="key_4"/>
+  </form>
+  {% endblock %}
+{% endblock %}

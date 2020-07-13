@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block titulo %}{% endblock%}</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/static/js/scripts.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/stilos.css" media="screen" />
+		<script src="http://pajhome.org.uk/crypt/md5/2.2/md5-min.js"></script>
+	</head>
+
+
+	<body background="/static/img/fondo.jpg">
+		{% if logueado %}
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			{% block nav_mod %}
+			{% endblock %}
+		</nav>
+		{% endif %}
+		{% block contenido %}{% endblock %}
+	</body>
+</html>

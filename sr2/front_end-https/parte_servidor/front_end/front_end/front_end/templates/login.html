@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block titulo %}Login{% endblock%}
+{% block contenido %}
+	<div class="container" >
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="row">
+						<div class="col-sm-6">
+							<img src="/static/img/uv.png" class="img-fluid">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="container">
+						<div  class="row">
+							<div class="col-sm-6"><img src="/static/img/login.png" class="img-fluid" id="icono-login"></div>
+						</div>
+						<div class="row">
+							{% if ban %}
+							<form class="form-horizontal" method="POST">
+								{% csrf_token %}
+								<div class="form-group">
+									<br>
+				            		<label id="recuadro_login">Ingresa tus datos:</label>
+				            		<input type="text" class="form-control" placeholder="Ingresa tu usuario" name="usuario" required>
+				            		<div class="invalid-feedback">Se requiere tu password</div>
+				         		</div>
+	          					<div class="form-group">
+	            					<input type="password" class="form-control" placeholder="Ingresa tu password" id="pass" name="pass" minlength="9" maxlength="15" required>
+	            					<div class="invalid-feedback">Se requiere tu password</div>
+	          					</div>
+	          					<button type="submit" class="btn btn-primary">Enviar</button>
+	          					{% if errores %}
+								<div class="alert alert-danger" role="alert">
+									<p>ERROR</p>{{ errores }}
+								</div> 
+								{% endif %}
+							</form>
+							{% else %}
+							{% if errores %}
+							<div class="alert alert-danger" role="alert">
+								<p>ERROR</p>{{ errores }}
+							</div> 
+							{% endif %}
+							{% endif %}
+							<br>
+							<p><a href="/loginAdmin/">¿Eres el administrador?</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+{% endblock %}

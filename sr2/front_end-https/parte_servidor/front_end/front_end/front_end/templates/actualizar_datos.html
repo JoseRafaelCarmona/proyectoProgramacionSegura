@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Inicio{% endblock%}
+
+
+{% block nav %}
+	{% block nav_mod %}
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="collapsibleNavbar">
+					<ul class="navbar-nav">
+						<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="/inicio/">Inicio</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/registro_administradores/">Registrar administradores</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/registro_servidores/">Registrar servidores</a>
+						</li>
+					</ul>
+				</div>
+				<div class="pull-right">
+					<ul class="nav pull-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido<b class=	"caret"></b></a>
+							<ul class="dropdown-menu">
+								<li class="divider"></li>
+								<li><a href="/logout/"><em class="icon-off"></em> Logout</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+	{% endblock %}
+{% endblock %}
+
+
+{% block contenido %}
+<div class="container">
+	{% if error == 'bien' %}
+		<div class="alert alert-success">
+				<strong>¡Se actualizaron los datos correctamente!</strong>
+		</div>
+	{% elif error == 'mal' %}
+		<div class="alert alert-danger" role="alert">
+			 <strong>Error</strong>El dato que quieres actualizar es incorrecto
+		 </div>
+	{% endif %}
+  {% if tipo == 'servidor' %}
+	<div class="row">
+		<div class="col-sm-4">
+		</div>
+		<div class="col-sm-4">
+			<h1><span class="label label-default">Editar SERVIDOR</span></h1>
+			<h1><span class="label label-default">{{ lista.ip_servidor }}</span></h1>
+			<form  method="post">
+				{% csrf_token %}
+			  <label for="datos">Elige tu opcion</label><br><br>
+			  <select id="datos" name="datos">
+				    <option value="hostname:{{ lista.hostname }}">{{ lista.hostname }}</option>
+				    <option value="ip:{{ lista.ip_servidor }}">{{ lista.ip_servidor }}</option>
+				    <option value="username:{{ lista.nombreUsuario }}">{{ lista.nombreUsuario }}</option>
+				    <option value="mac:{{ lista.mac }}">{{ lista.mac }}</option>
+			  </select>
+				<br><br>
+				<input type="text" name="actualiza" required><br><br>
+			  <input type="submit">
+			</form>
+		</div>
+		<div class="col-sm-4">
+		</div>
+	</div>
+{% elif tipo == 'admin_server' %}
+	<div class="row">
+		<div class="col-sm-4">
+		</div>
+		<div class="col-sm-4">
+			<h1><span class="label label-default">Editar</span></h1>
+			<h1><span class="label label-default">{{ lista.username }}</span></h1>
+			<form  method="post">
+				{% csrf_token %}
+				<label for="datos">Elige tu opcion</label><br><br>
+				<select id="datos" name="datos">
+						<option value="id:{{ lista.id }}">id: {{ lista.id }}</option>
+						<option value="username:{{ lista.username }}">usuario: {{ lista.username }}</option>
+						<option value="name:{{ lista.first_name }}">Nombre: {{ lista.first_name }}</option>
+						<option value="email:{{ lista.email }}">Correo: {{ lista.email }}</option>
+				</select>
+				<br><br>
+				<input type="text" name="actualiza" required><br><br>
+				<input type="submit">
+			</form>
+		</div>
+		<div class="col-sm-4">
+		</div>
+	</div>
+</div>
+{% endif %}
+
+
+
+	{% block con_sec %}
+	<form>
+		<input type="hidden" value="{{ llave_aes_usr}}" name="key_1"/>
+		<input type="hidden" value="{{ iv_usr }}" name="key_2"/>
+		<input type="hidden" value="{{ llave_aes_pwd }}" name="key_3"/>
+		<input type="hidden" value="{{ iv_pwd }}" name="key_4"/>
+	</form>
+	{% endblock %}
+{% endblock %}

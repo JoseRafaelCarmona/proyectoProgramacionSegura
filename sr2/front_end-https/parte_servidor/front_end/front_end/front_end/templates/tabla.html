@@ -1,0 +1,29 @@
+<table>
+  <thead>
+    <tr>
+      <th>Memoria Ram</th>
+      <td>Memoria Swap</td>
+      <th>Espacio en disco</th>
+      <th>CPU</th>
+      <th>Servicio</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ dato }}
+    <td>{{ memoria_ram }}%</td>
+    <td>{{ swap }}%</td>
+    <td>{{ espacio_disco }}%</td>
+    <td>{{ numero_procesadores }}</td>
+    <td>
+      {% if error %}
+        <div class="alert alert-success">
+            <strong>En linea</strong>
+        </div>
+      {% else %}
+        <div class="alert alert-danger" role="alert">
+           <strong>Sin conexion</strong>
+         </div>
+      {% endif %}
+    </td>
+  </tbody>
+</table>

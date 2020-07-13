@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Inicio{% endblock%}
+
+{% block nav %}
+	{% block nav_mod %}
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="collapsibleNavbar">
+					<ul class="navbar-nav">
+						<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="/inicio/">Inicio</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/registro_administradores/">Registrar administradores</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/registro_servidores/">Registrar servidores</a>
+						</li>
+					</ul>
+				</div>
+				<div class="pull-right">
+					<ul class="nav pull-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Bienvenido<b class=	"caret"></b></a>
+							<ul class="dropdown-menu">
+								<li class="divider"></li>
+								<li><a href="/logout/"><em class="icon-off"></em> Logout</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+	{% endblock %}
+{% endblock %}
+
+{% block contenido %}
+	<div class="container">
+		{% if error == 'bien' %}
+			<div class="alert alert-success">
+					<strong>¡Se ha borrado con exito!</strong>
+			</div>
+		{% elif error == 'mal' %}
+			<div class="alert alert-danger" role="alert">
+				 <strong>Error</strong> Hubo algún error al momento de borrar
+			 </div>
+		{% endif %}
+	{% if servidores_registrado %}
+		<div class="row">
+				<h1><span class="label label-default">Servidores registrados</span></h1>
+				<div class="col-sm-12">
+			    <table class="table table-dark">
+			      <thead>
+			        <tr>
+			          <th>Hostname</th>
+			          <th>Direccion_ip</th>
+			          <th>Direccion_MAC</th>
+			          <th>administrador</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        {% for datos in listaServidores %}
+			          <tr>
+			            <td>{{ datos.hostname }} </td>
+			            <td>{{ datos.ip_servidor }}</td>
+			            <td>{{ datos.mac }}</<td>
+									<td>{{ datos.nombreUsuario }}</td>
+										<form type="hidden" method="post">
+											{% csrf_token %}
+											<input type="hidden" value="editar:servidores:{{ datos.ip_servidor }}" name="seleccion"/>
+											<td><button type="submit" class="btn btn-primary">Editar</button></td>
+										</form>
+			              <form type="hidden" method="post">
+			                {% csrf_token %}
+			                <input type="hidden" value="borrar:servidores:{{ datos.ip_servidor }}" name="seleccion"/>
+			                <td><button type="submit" class="btn btn-danger">Eliminar</button></td>
+			              </form>
+			          </tr>
+			        {% endfor %}
+			      </tbody>
+			   </table>
+			</div>
+		</div>
+{% else %}
+	<div class="alert alert-danger" role="alert">
+			<strong>Error</strong> Aun no hay servidores registrados
+	</div>
+{% endif %}
+
+		<div class="row">
+				<h1><span class="label label-default">Administradores registrados</span></h1>
+				<div class="col-sm-12">
+			    <table class="table table-dark">
+			      <thead>
+			        <tr>
+			          <th>id</th>
+			          <th>Usuario</th>
+			          <th>super_user</th>
+								<th>Nombre</th>
+								<th>Email</th>
+			          <th>Ultima_conexion</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        {% for datos in listaAdministradores %}
+			          <tr>
+									<td>{{ datos.id }}</td>
+			            <td>{{ datos.username }} </td>
+			            <td>{{ datos.is_superuser }}</td>
+									<td>{{ datos.first_name }}</td>
+									<td>{{ datos.email }}</td>
+									<td>{{ datos.date_joined }}</td>
+										<form type="hidden" method="post">
+											{% csrf_token %}
+											<input type="hidden" value="editar:administradores:{{ datos.username }}" name="seleccion"/>
+											<td><button type="submit" class="btn btn-primary">Editar</button></td>
+										</form>
+			              <form type="hidden" method="post">
+			                {% csrf_token %}
+			                <input type="hidden" value="borrar:administradores:{{ datos.username }}" name="seleccion"/>
+			                <td><button type="submit" class="btn btn-danger">Eliminar</button></td>
+			              </form>
+			          </tr>
+			        {% endfor %}
+			      </tbody>
+			   </table>
+			</div>
+		</div>
+	</div>
+
+{% block con_sec %}
+	<form>
+		<input type="hidden" value="{{ llave_aes_usr}}" name="key_1"/>
+		<input type="hidden" value="{{ iv_usr }}" name="key_2"/>
+		<input type="hidden" value="{{ llave_aes_pwd }}" name="key_3"/>
+		<input type="hidden" value="{{ iv_pwd }}" name="key_4"/>
+	</form>
+{% endblock %}
+
+{% endblock %}
